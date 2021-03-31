@@ -94,7 +94,8 @@ class DtpController extends Controller
      */
     public function edit($id)
     {
-        return view('dtf.modif',compact('post'));
+        $post = User::find($id);
+        return view('calon.modif', compact('post'));
     }
 
     /**
@@ -104,16 +105,17 @@ class DtpController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $post)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required',
-            'content' => 'required',
+            'name' => 'required',
+            'address' => 'required',
         ]);
-        
+        $post = User::find($id);
         $post->update($request->all());
+        // var_dump($request->all());
         
-        return redirect()->route('calon.index')
+        return redirect()->route('dtp.index')
         ->with('success','Post updated successfully');
     }
 

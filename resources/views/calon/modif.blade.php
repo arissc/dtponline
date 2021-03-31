@@ -1,48 +1,57 @@
 @extends('template')
 
 @section('content')
-    <div class="row mt-5 mb-5">
-        <div class="col-lg-12 margin-tb">
-            <div class="float-left">
-                <h2>Edit Post</h2>
+<div class="row mt-5 mb-5">
+    <div class="col-lg-12 margin-tb">
+        <div class="float-left">
+            <h2>Edit Post</h2>
+        </div>
+        <div class="float-right">
+            <a class="btn btn-secondary" href="{{ route('dtp.index') }}"> Back</a>
+        </div>
+    </div>
+</div>
+@if ($errors->any())
+<div class="alert alert-danger">
+    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
+<form action="{{ route('dtp.update',$post->id) }}" method="POST">
+    @csrf
+    @method('PUT')
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Nama:</strong>
+                <input type="text" name="name"  value="{{ $post->name }}" class="form-control" placeholder="Nama" required>
             </div>
-            <div class="float-right">
-                <a class="btn btn-secondary" href="{{ route('posts.index') }}"> Back</a>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Alamat:</strong>
+                <input type="text" name="address"  value="{{ $post->address }}" class="form-control" placeholder="Alamat" required>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>KTP:</strong>
+                <input type="text" name="ktp"  value="{{ $post->ktp }}" class="form-control" placeholder="KTP" required>
             </div>
         </div>
     </div>
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">Update</button>
         </div>
-    @endif
+    </div>
 
-    <form action="{{ route('posts.update',$post->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-
-         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Title:</strong>
-                    <input type="text" name="title" value="{{ $post->title }}" class="form-control" placeholder="Title">
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Content:</strong>
-                    <textarea class="form-control" style="height:150px" name="content" placeholder="Content">{{ $post->content }}</textarea>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-              <button type="submit" class="btn btn-primary">Update</button>
-            </div>
-        </div>
-
-    </form>
+</form>
 @endsection

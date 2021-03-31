@@ -15,6 +15,4 @@ use App\Http\Controllers\DtpController;
 */
 
 Route::resource('dtp', DtpController::class);
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\DtpController::class,'index']);
